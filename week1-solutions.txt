@@ -1,0 +1,258 @@
+//WEIRD ALGO
+#include <iostream>
+using namespace std;
+
+int main() {
+
+    int n;
+    cin >> n;
+cout<< n << ' ';
+
+    while(n != 1){
+        if(n % 2 == 0){
+            n = n / 2;
+        } else {
+            n = 3 * n + 1;
+        }
+
+        cout << n << " ";
+    }
+
+    return 0;
+}
+//missing num
+#include <iostream>
+using namespace std;
+
+int main() {
+
+    long long  n;
+    cin >> n;
+long long arr[n-1];
+for(long long i =0; i<n-1;i++){
+cin >> arr[i];
+}
+int sum = 0;
+for(long long i=0; i<n-1; i++){
+    sum+=arr[i];
+}
+cout<< ((n*(n+1))/2) - sum;
+return 0;
+}
+------------------------------------------------------------------------------------------------------------------
+//spiral num
+#include <iostream>
+using namespace std;
+
+int main() {
+    int m;
+    cin >> m;
+
+    while (m--) {
+        long long y, x;
+        cin >> y >> x;
+
+        long long n = max(y, x);
+        long long ans;
+
+        if (n % 2 == 0) {
+            if (y == n)
+                ans = n * n - x + 1;
+            else
+                ans = (n - 1) * (n - 1) + y;
+        } else {
+            if (x == n)
+                ans = n * n - y + 1;
+            else
+                ans = (n - 1) * (n - 1) + x;
+        }
+
+        cout << ans << "\n";
+    }
+
+    return 0;
+}
+------------------------------------------------------------------------------------------------------------------
+
+//maximum subarray sum
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    vector<long long> a(n);
+
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+
+    long long currSum = a[0];
+    long long bestSum = a[0];
+
+    for (int i = 1; i < n; i++) {
+        currSum = max(a[i], currSum + a[i]);
+        bestSum = max(bestSum, currSum);
+    }
+
+    cout << bestSum << '\n';
+
+    return 0;
+}
+------------------------------------------------------------------------------------------------------------------
+
+//subarray sumI
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int n;
+    long long x;
+    cin >> n >> x;
+
+    vector<long long> a(n);
+
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+
+    long long sum = 0;
+    long long ans = 0;
+    int left = 0;
+
+    for (int right = 0; right < n; right++) {
+        sum += a[right];
+
+        while (sum > x) {
+            sum -= a[left];
+            left++;
+        }
+
+        if (sum == x) {
+            ans++;
+        }
+    }
+
+    cout << ans << '\n';
+
+    return 0;
+}
+------------------------------------------------------------------------------------------------------------------
+
+//distinct sorting
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    vector<long long> a(n);
+
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+
+    sort(a.begin(), a.end());
+
+    int distinct = 1;
+
+    for (int i = 1; i < n; i++) {
+        if (a[i] != a[i - 1]) {
+            distinct++;
+        }
+    }
+
+    cout << distinct << '\n';
+
+    return 0;
+}
+------------------------------------------------------------------------------------------------------------------
+
+//APARTMENT
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n, m;
+    long long k;
+    cin >> n >> m >> k;
+
+    vector<long long> applicants(n);
+    vector<long long> apartments(m);
+
+    for (int i = 0; i < n; i++) {
+        cin >> applicants[i];
+    }
+
+    for (int i = 0; i < m; i++) {
+        cin >> apartments[i];
+    }
+
+    sort(applicants.begin(), applicants.end());
+    sort(apartments.begin(), apartments.end());
+
+    int i = 0, j = 0;
+    int ans = 0;
+
+    while (i < n && j < m) {
+        if (apartments[j] < applicants[i] - k) {
+            j++;
+        }
+        else if (apartments[j] > applicants[i] + k) {
+            i++;
+        }
+        else {
+            ans++;
+            i++;
+            j++;
+        }
+    }
+
+    cout << ans << '\n';
+
+    return 0;
+}
+------------------------------------------------------------------------------------------------------------------
+
+//CONCERT TICKETS
+#include <iostream>
+#include <set>
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+
+    multiset<int> tickets;
+
+    for (int i = 0; i < n; i++) {
+        int price;
+        cin >> price;
+        tickets.insert(price);
+    }
+
+    for (int i = 0; i < m; i++) {
+        int maxPrice;
+        cin >> maxPrice;
+
+        auto it = tickets.upper_bound(maxPrice);
+
+        if (it == tickets.begin()) {
+            cout << -1 << '\n';
+        } else {
+            --it;
+            cout << *it << '\n';
+            tickets.erase(it);
+        }
+    }
+
+    return 0;
+}
